@@ -2,6 +2,8 @@ package main;
 
 import entities.Client;
 import entities.Event;
+import entities.EventType;
+import loggers.CacheFileEventLogger;
 import loggers.ConsoleEventLogger;
 import loggers.IEventLogger;
 import org.springframework.context.ApplicationContext;
@@ -9,15 +11,18 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.io.IOException;
+import java.util.Map;
 
 public class App {
     private Client client;
-    private IEventLogger eventLogger;
+    private IEventLogger defaultLogger;
+    private Map<EventType,IEventLogger> eventLoggers;
     private Event event;
 
-    public App(Client client, IEventLogger eventLogger, Event event) {
+    public App(Client client, IEventLogger defaultLogger, Map<EventType, IEventLogger> eventLoggers, Event event) {
         this.client = client;
-        this.eventLogger = eventLogger;
+        this.defaultLogger = defaultLogger;
+        this.eventLoggers = eventLoggers;
         this.event = event;
     }
 
@@ -27,18 +32,21 @@ public class App {
 
         App app = (App) applicationContext.getBean("app");
 
-        app.logEvent("some event for user 1");
+        app.logEvent(app.event, EventType.INFO);
 
-        app.logEvent("some event for user 2");
+        app.logEvent(app.event, EventType.ERROR);
 
-        app.eventLogger.logEvent(app.event);
-        app.eventLogger.logEvent(app.event);
+        app.logEvent(app.event, null);
 
     }
 
-    void logEvent(String msg){
-        msg = msg.replaceAll(String.valueOf(client.getId()), client.getFullName());
-        //consoleEventLogger.logEvent(msg);
-        System.out.println(msg);
+    public void logEvent(Event event, EventType eventType) throws IOException {
+
+        IEventLogger logger = eventLoggers.get(eventType);
+        if(logger == null){
+            defaultLogger.logEvent(event);
+        }else{
+            logger.logEvent(event);
+        }
     }
 }
