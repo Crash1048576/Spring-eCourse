@@ -31,4 +31,12 @@ public class CacheFileEventLogger extends FileEventLogger {
             super.logEvent(e);
         }
     }
+
+    private void destroy() throws IOException {
+        if(!cache.isEmpty()){
+            for(Event e : cache){
+                super.logEvent(e);
+            }
+        }
+    }
 }

@@ -25,7 +25,7 @@
         <constructor-arg value="spring.txt"/>
     </bean>
 
-    <bean id="cacheFileEventLogger" class="loggers.CacheFileEventLogger" init-method="init">
+    <bean id="cacheFileEventLogger" class="loggers.CacheFileEventLogger" init-method="init" destroy-method="destroy">
         <constructor-arg value="spring.txt"/>
         <constructor-arg value="5"/>
     </bean>

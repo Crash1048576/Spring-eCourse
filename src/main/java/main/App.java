@@ -5,6 +5,7 @@ import entities.Event;
 import loggers.ConsoleEventLogger;
 import loggers.IEventLogger;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.io.IOException;
@@ -21,7 +22,8 @@ public class App {
     }
 
     public static void main(String[] args) throws IOException {
-        ApplicationContext applicationContext = new ClassPathXmlApplicationContext("application-context.xml");
+        ConfigurableApplicationContext applicationContext = new ClassPathXmlApplicationContext("application-context.xml");
+        applicationContext.registerShutdownHook();
 
         App app = (App) applicationContext.getBean("app");
 
@@ -32,10 +34,6 @@ public class App {
         app.eventLogger.logEvent(app.event);
         app.eventLogger.logEvent(app.event);
 
-        app.eventLogger.logEvent(app.event);
-        app.eventLogger.logEvent(app.event);
-        app.eventLogger.logEvent(app.event);
-        app.eventLogger.logEvent(app.event);
     }
 
     void logEvent(String msg){
