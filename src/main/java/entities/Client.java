@@ -10,6 +10,15 @@ public class Client {
         this.fullName = fullName;
     }
 
+    @Override
+    public String toString() {
+        return "Client{" +
+                "id=" + id +
+                ", fullName='" + fullName + '\'' +
+                ", greeting='" + greeting + '\'' +
+                '}';
+    }
+
     public Long getId() {
         return id;
     }

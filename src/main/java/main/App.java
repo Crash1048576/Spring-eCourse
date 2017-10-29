@@ -37,7 +37,7 @@ public class App {
         app.logEvent(app.event, EventType.ERROR);
 
         app.logEvent(app.event, null);
-
+        System.out.println(app.client);
     }
 
     public void logEvent(Event event, EventType eventType) throws IOException {
