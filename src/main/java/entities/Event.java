@@ -1,9 +1,13 @@
 package entities;
 
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+
 import java.text.DateFormat;
 import java.util.Date;
 
 public class Event {
+
     private Long id;
     private String message;
     private Date date;

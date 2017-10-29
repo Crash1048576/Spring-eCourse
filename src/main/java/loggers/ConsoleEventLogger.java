@@ -1,6 +1,7 @@
 package loggers;
 
 import entities.Event;
+import org.springframework.stereotype.Component;
 
 public class ConsoleEventLogger implements IEventLogger {
 

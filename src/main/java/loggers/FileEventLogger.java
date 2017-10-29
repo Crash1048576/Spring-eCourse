@@ -2,7 +2,10 @@ package loggers;
 
 import entities.Event;
 import org.apache.commons.io.FileUtils;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import java.io.*;
 
 public class FileEventLogger implements IEventLogger {
@@ -18,6 +21,7 @@ public class FileEventLogger implements IEventLogger {
         FileUtils.writeStringToFile(file, "\n"+event.toString(), true);
     }
 
+    @PostConstruct
     private void init(){
         File file = new File(fileName);
         file.canWrite();

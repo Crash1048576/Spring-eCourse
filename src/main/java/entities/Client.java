@@ -1,11 +1,18 @@
 package entities;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.stereotype.Component;
+
+@Component
+@PropertySource(value = "classpath:client.properties")
 public class Client {
     private Long id;
     private String fullName;
+    @Value("${greeting}")
     private String greeting;
 
-    public Client(Long id, String fullName) {
+    public Client(@Value("${id}")Long id, @Value("${name}")String fullName) {
         this.id = id;
         this.fullName = fullName;
     }
